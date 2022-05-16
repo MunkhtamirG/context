@@ -5,11 +5,16 @@ import Unsuccess from "./Unsuccess";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import SignUp from "./components/SignUp";
 
 function App() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [success, setSuccess] = useState("");
   let userInfo = {};
+  const notifySuccess = () => toast("Амжилттай нэвтэрлээ.");
+  const notifyUnSuccess = () => toast("Нууц үг нэр хоорондоо таарахгүй байна.");
   function clickHandler(e) {
     fetch("https://dev-api.mstars.mn/admin/login", {
       method: "POST",
@@ -18,14 +23,15 @@ function App() {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.success == true) {
+        if (res.success === true) {
           console.log(res.success);
           setSuccess(res.success);
-          navigate("/Success");
+          // navigate("/Success");
+          notifySuccess();
         } else {
           console.log(res.status);
           setSuccess(res.success);
-          navigate("/Unsuccess");
+          notifyUnSuccess();
         }
 
         console.log(res.success);
@@ -42,12 +48,14 @@ function App() {
   return (
     <div className="App">
       <Header submitHandler={submitHandler} />
-      <Main success={success} />
-
       <Routes>
+        <Route path="/" element={<Main success={success} />} />
         <Route path="/Success" element={<Success />} />
         <Route path="/Unsuccess" element={<Unsuccess />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
+
+      <ToastContainer />
     </div>
   );
 }
