@@ -1,0 +1,17 @@
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.formStyle {
+  display: flex;
+  flex-direction: column;
+  width: 20vw;
+
+  height: 80vh;
+
+  margin: auto;
+}
+.Toastify {
+  background-color: aqua !important;
+}
